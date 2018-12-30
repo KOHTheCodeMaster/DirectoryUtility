@@ -5,7 +5,7 @@ import dev.koh.untitled.organiser.utils.DirectoryOrganiser;
 import javax.swing.*;
 import java.awt.*;
 
-class MainFrame extends JFrame {
+public class MainFrame extends JFrame {
 
     //  Dimensions of the MainFrame.
     private static final int HEIGHT = 720;
@@ -91,4 +91,11 @@ class MainFrame extends JFrame {
 
     }
 
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
 }

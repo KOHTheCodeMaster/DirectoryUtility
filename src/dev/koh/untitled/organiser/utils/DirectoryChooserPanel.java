@@ -1,8 +1,10 @@
 package dev.koh.untitled.organiser.utils;
 
+import dev.koh.untitled.MainFrame;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
 
 public class DirectoryChooserPanel extends JPanel {
 
@@ -12,8 +14,11 @@ public class DirectoryChooserPanel extends JPanel {
     private JFileChooser fileChooser;
     private JTextField textField;
 
+    private Font font;
+
     {
         init();
+        initializeEventListeners();
     }
 
     DirectoryChooserPanel() {
@@ -35,28 +40,76 @@ public class DirectoryChooserPanel extends JPanel {
 
     private void init() {
 
-        //  Instantiating the Components of the Directory Organiser.
+        //  Setup the Size for the DirectoryChooserPanel.
+        setupPanelSize();
 
+        //  Instantiating the Components of the Directory Organiser.
         btn1 = new JButton();
         testLbl1 = new JLabel("Directory Path:");
         fileChooser = new JFileChooser();
-        textField = new JTextField(20);
+        textField = new JTextField(40);
+
+        //  Initialize & Set the font for the components including testLbl1 & textField.
+        setupFont();
+
+        //  Set Image Icon to Btn1.
+        setupImageIcon();
 
     }
 
-    void resizeBtn() {
+    private void setupPanelSize() {
 
-        System.out.println("x: " + btn1.getX() + " | Y : " + btn1.getY());
-        System.out.println("x: " + textField.getPreferredSize().width + " | Y : " + textField.getPreferredSize().height);
+        //  setPreferredSize sets the Size for the layout manager.
+        //  setSize sets the size for the individual component.
 
-        btn1.setSize(new Dimension(40, 20));
+        //  Divide the HEIGHT of the MainFrame by number of Rows in DirectoryOrganiser i.e. 7.
+        int height = MainFrame.getHEIGHT() / 7;
+
+        setPreferredSize(new Dimension(200, height));
+
     }
 
+    private void setupFont() {
+
+        //  Instantiating the font component.
+        font = new Font("Verdana", Font.PLAIN, 24);
+
+        //  Apply font to testLbl1 & textField.
+        testLbl1.setFont(font);
+        textField.setFont(font);
+
+    }
+
+    //  Set the Image Icon for the btn1.
+    private void setupImageIcon() {
+
+        ImageIcon imageIcon = new ImageIcon("res/Icons/directory_icon2.png");
+        Image img = imageIcon.getImage();
+        Image newImage = img.getScaledInstance(imageIcon.getIconWidth(), imageIcon.getIconHeight(), Image.SCALE_SMOOTH);
+
+        btn1.setIcon(new ImageIcon(newImage));
+
+    }
+
+    private void initializeEventListeners() {
+
+        //  Handle the Actions to be performed when btn1 is clicked.
+        btn1.addActionListener(this::btn1ActionPerformed);
+
+    }
+
+    private void btn1ActionPerformed(ActionEvent event) {
+        System.out.println("test msg.");
+    }
+
+
+    /*
+    //  2 Methods used to adjust the image icon to the size of the JButton btn1.
     void updateIcon2() {
         //  Image Centered in the Btn.
-        ImageIcon icon = new ImageIcon("res/Icons/directory_icon.png");
+        ImageIcon icon = new ImageIcon("res/Icons/directory_icon2.png");
         Image img = icon.getImage();
-        BufferedImage bi = new BufferedImage(40, 20, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage bi = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics g = bi.createGraphics();
         g.drawImage(img, 0, 0, null);
         icon = new ImageIcon(bi);
@@ -71,5 +124,5 @@ public class DirectoryChooserPanel extends JPanel {
         icon = new ImageIcon(newimg);
         btn1.setIcon(icon);
     }
-
+    */
 }
