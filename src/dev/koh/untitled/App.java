@@ -10,7 +10,7 @@ public class App {
         System.out.println("Begin.");
 
         //  Using Lambda Expression for instantiating Runnable Interface.
-        Runnable runnable = Controller::new;
+        Runnable runnable = () -> new MainFrame("Untitled..!!");
 
         //  Launching App while handling the Multi-threaded Events using SwingUtilities.invokeLater method
         //  which takes in an instance of Runnable Interface.
@@ -22,9 +22,16 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 30th December 2K18, 09:22 PM..!!
+ *  Last Modified: 30th December 2K18, 11:34 PM..!!
  *
  *  Latest Update:
+ *  Commit 2nd:
+ *      1. MainFrame turned into Controller.
+ *      2. StartPanel added with Test Label & Button.
+ *      3. TextPanel created.
+ *
+ *  Change Log:
+ *  Init Commit:
  *      1. Controller with the Blank MainFrame Added.
  *
  *  Code Developed By,
