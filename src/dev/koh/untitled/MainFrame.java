@@ -1,5 +1,7 @@
 package dev.koh.untitled;
 
+import dev.koh.untitled.organiser.utils.DirectoryOrganiser;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,6 +12,7 @@ class MainFrame extends JFrame {
     private static final int WIDTH = 1280;
 
     private StartPanel startPanel;
+    private DirectoryOrganiser directoryOrganiser;
 
     private CardLayout cards;
 
@@ -28,15 +31,36 @@ class MainFrame extends JFrame {
 
     }
 
-    //  Launch the Organiser Card when the Organiser Button of startPanel is clicked.
-    private static void launchOrganiser() {
-        System.out.println("Launching the App!");
-    }
-
     private static void launchAppMsg2() {
         System.out.println("Launching the App2!");
     }
 
+    private void init() {
+
+        //  Instantiating the startPanel.
+        startPanel = new StartPanel();
+
+        //  Instantiating the directoryOrganiser.
+        directoryOrganiser = new DirectoryOrganiser();
+
+        initializeListeners();
+
+//        cardLayout = new CardLayout();
+//        setLayout(cardLayout);
+//        add(startPanel, "startPanel");
+//        add(textPanel, "textPanel");
+
+    }
+
+    //  Display the message in the Console during Startup of the App.
+
+    private void initializeListeners() {
+
+        startPanel.setStartPanelListener(this::launchOrganiser);
+
+    }
+
+    //  setupDefaultFrameSettings() is used to setup the frame settings.
     private void setupDefaultFrameSettings() {
 
         //  Set Dimensions for the MainFrame.
@@ -54,34 +78,17 @@ class MainFrame extends JFrame {
 
     }
 
-    private void init() {
-
-        //  Instantiating the startPanel.
-        startPanel = new StartPanel();
-
-        initializeListeners();
-
-//        cardLayout = new CardLayout();
-//        setLayout(cardLayout);
-//        add(startPanel, "startPanel");
-//        add(textPanel, "textPanel");
-
-    }
-
-    private void initializeListeners() {
-
-        startPanel.setStartPanelListener(MainFrame::launchOrganiser);
-
-    }
-
-    //  Display the message in the Console during Startup of the App.
-
     private void setupLayoutManager() {
         cards = new CardLayout();
         setLayout(cards);
         add(startPanel, "startPanel");
+        add(directoryOrganiser, "directoryOrganiser");
     }
 
-    //  setupDefaultFrameSettings() is used to setup the frame settings.
+    //  Launch the Organiser Card when the Organiser Button of startPanel is clicked.
+    private void launchOrganiser() {
+        cards.show(this.getContentPane(), "directoryOrganiser");
+
+    }
 
 }

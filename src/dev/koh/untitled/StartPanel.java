@@ -18,7 +18,7 @@ public class StartPanel extends JPanel {
 
         init();
 
-        setLayoutManager();
+        setupLayoutManager();
 
     }
 
@@ -26,7 +26,7 @@ public class StartPanel extends JPanel {
 
 
         //  Instantiating the Test Label.
-        testLbl1 = new JLabel("Welcome To File Utility Centre.");
+        testLbl1 = new JLabel("Welcome To File Utility.");
 
         //  Instantiating the Button.
         testBtn1 = new JButton("File Organiser");
@@ -46,7 +46,7 @@ public class StartPanel extends JPanel {
 
     }
 
-    private void setLayoutManager() {
+    private void setupLayoutManager() {
 
         //  Set the layout as GridBagLayout.
         setLayout(new GridBagLayout());
@@ -79,7 +79,7 @@ public class StartPanel extends JPanel {
     private void adjustTestBtn1() {
 
         testBtn1.setFont(font);
-        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.anchor = GridBagConstraints.NORTH;
         gbc.insets = new Insets(10, 0, 0, 0);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -103,7 +103,7 @@ public class StartPanel extends JPanel {
             startPanelListener.launchApp();
     }
 
-    public void setStartPanelListener(StartPanelListener startPanelListener) {
+    void setStartPanelListener(StartPanelListener startPanelListener) {
         this.startPanelListener = startPanelListener;
     }
 
