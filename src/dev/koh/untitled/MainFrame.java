@@ -1,5 +1,6 @@
 package dev.koh.untitled;
 
+import dev.koh.untitled.organiser.utils.DirectoryChooserPanel;
 import dev.koh.untitled.organiser.utils.DirectoryOrganiser;
 
 import javax.swing.*;
@@ -13,6 +14,7 @@ public class MainFrame extends JFrame {
 
     private StartPanel startPanel;
     private DirectoryOrganiser directoryOrganiser;
+    private DirectoryChooserPanel directoryChooserPanel;
 
     private CardLayout cards;
 
@@ -40,8 +42,7 @@ public class MainFrame extends JFrame {
         //  Instantiating the startPanel.
         startPanel = new StartPanel();
 
-        //  Instantiating the directoryOrganiser.
-        directoryOrganiser = new DirectoryOrganiser();
+        setupDirectoryOrganiser();
 
         initializeListeners();
 
@@ -50,6 +51,17 @@ public class MainFrame extends JFrame {
 //        add(startPanel, "startPanel");
 //        add(textPanel, "textPanel");
 
+    }
+
+    private void setupDirectoryOrganiser() {
+        //  Instantiating the directoryChooserPanel.
+        directoryChooserPanel = new DirectoryChooserPanel();
+
+        //  Instantiating the directoryOrganiser.
+        directoryOrganiser = new DirectoryOrganiser(directoryChooserPanel);
+
+        //  After setting the directoryChooserPanel for the directoryOrganiser, setup the layout manager.
+        directoryOrganiser.setupLayoutManager();
     }
 
     //  Display the message in the Console during Startup of the App.
@@ -88,7 +100,6 @@ public class MainFrame extends JFrame {
     //  Launch the Organiser Card when the Organiser Button of startPanel is clicked.
     private void launchOrganiser() {
         cards.show(this.getContentPane(), "directoryOrganiser");
-
     }
 
     public static int getHEIGHT() {

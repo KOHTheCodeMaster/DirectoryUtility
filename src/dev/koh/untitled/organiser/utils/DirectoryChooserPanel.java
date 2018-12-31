@@ -21,7 +21,7 @@ public class DirectoryChooserPanel extends JPanel {
         initializeEventListeners();
     }
 
-    DirectoryChooserPanel() {
+    public DirectoryChooserPanel() {
 
         //  Setup Flow Layout.
         setupLayoutManager();

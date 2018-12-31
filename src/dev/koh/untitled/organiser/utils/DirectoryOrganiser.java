@@ -5,26 +5,19 @@ import java.awt.*;
 
 public class DirectoryOrganiser extends JPanel {
 
-    private DirectoryChooserPanel directoryChooserPanel;
+    private JPanel directoryChooserPanel;
 
-    public DirectoryOrganiser() {
-
-        //  Instantiating the Components of DirectoryOrganiser.
-        directoryChooserPanel = new DirectoryChooserPanel();
-
-        setupLayoutManager();
-
+    public DirectoryOrganiser(JPanel directoryChooserPanel) {
+        this.directoryChooserPanel = directoryChooserPanel;
     }
 
-
-    private void setupLayoutManager() {
+    public void setupLayoutManager() {
 
         setLayout(new BorderLayout());
 
         add(directoryChooserPanel, BorderLayout.NORTH);
 
     }
-
 
 }
 

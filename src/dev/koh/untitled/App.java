@@ -22,12 +22,11 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 30th December 2K18, 04:28 PM..!!
+ *  Last Modified: 31st December 2K18, 09:38 PM..!!
  *
  *  Latest Update:
- *  Commit 4th:
- *      1. Image Icon added to the JButton btn1.
- *      2. Size set for the DirectoryChooserPanel.
+ *  Commit 5th:
+ *      1. Encapsulated the DirectoryOrganiser & DirectoryChooserPanel Classes.
  *
  *  Change Log:
  *  Init Commit:
@@ -41,6 +40,10 @@ public class App {
  *  Commit 3rd:
  *      1. Cards Layout added to MainFrame.
  *      2. DirectoryOrganiser, DirectoryChooserPanel Classes added.
+ *
+ *  Commit 4th:
+ *      1. Image Icon added to the JButton btn1.
+ *      2. Size set for the DirectoryChooserPanel.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^
