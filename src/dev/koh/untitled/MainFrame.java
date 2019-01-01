@@ -60,8 +60,6 @@ public class MainFrame extends JFrame {
         //  Instantiating the directoryOrganiser.
         directoryOrganiser = new DirectoryOrganiser(directoryChooserPanel);
 
-        //  After setting the directoryChooserPanel for the directoryOrganiser, setup the layout manager.
-        directoryOrganiser.setupLayoutManager();
     }
 
     //  Display the message in the Console during Startup of the App.

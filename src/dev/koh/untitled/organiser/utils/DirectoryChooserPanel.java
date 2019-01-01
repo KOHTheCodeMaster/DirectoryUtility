@@ -3,8 +3,10 @@ package dev.koh.untitled.organiser.utils;
 import dev.koh.untitled.MainFrame;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 public class DirectoryChooserPanel extends JPanel {
 
@@ -46,14 +48,24 @@ public class DirectoryChooserPanel extends JPanel {
         //  Instantiating the Components of the Directory Organiser.
         btn1 = new JButton();
         testLbl1 = new JLabel("Directory Path:");
-        fileChooser = new JFileChooser();
         textField = new JTextField(40);
+
+        //  Setup fileChooser.
+        setupFileChooser();
 
         //  Initialize & Set the font for the components including testLbl1 & textField.
         setupFont();
 
         //  Set Image Icon to Btn1.
         setupImageIcon();
+
+    }
+
+    private void setupFileChooser() {
+
+        //  Instantiate the fileChooser.
+        fileChooser = new JFileChooser();
+
 
     }
 
@@ -99,7 +111,14 @@ public class DirectoryChooserPanel extends JPanel {
     }
 
     private void btn1ActionPerformed(ActionEvent event) {
-        System.out.println("test msg.");
+
+//        System.out.println("test msg.");
+        File file = new File("res/Icons/directory_icon2.png");
+        System.out.println("Video Extension: " + Utils.getExtension(file));
+
+        if (Utils.isVideoFile(new File("a.mkv")))
+            System.out.println("Video File.");
+
     }
 
 
@@ -125,4 +144,24 @@ public class DirectoryChooserPanel extends JPanel {
         btn1.setIcon(icon);
     }
     */
+}
+
+class videoFileFilter extends FileFilter {
+
+    @Override
+    public boolean accept(File f) {
+
+        //  Allow the Directories to be shown in the FileChooser.
+        if (f.isDirectory())
+            return true;
+
+//        Extension extension = Utils.getExtension(f);
+
+        return (Utils.isVideoFile(f));
+    }
+
+    @Override
+    public String getDescription() {
+        return "Video Files";
+    }
 }

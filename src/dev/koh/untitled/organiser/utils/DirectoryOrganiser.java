@@ -9,9 +9,12 @@ public class DirectoryOrganiser extends JPanel {
 
     public DirectoryOrganiser(JPanel directoryChooserPanel) {
         this.directoryChooserPanel = directoryChooserPanel;
+
+        setupLayoutManager();
     }
 
-    public void setupLayoutManager() {
+    //  After setting the directoryChooserPanel for the directoryOrganiser, setup the layout manager.
+    private void setupLayoutManager() {
 
         setLayout(new BorderLayout());
 
