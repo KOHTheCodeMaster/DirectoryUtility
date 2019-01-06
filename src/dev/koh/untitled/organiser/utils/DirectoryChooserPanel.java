@@ -11,12 +11,14 @@ import java.io.File;
 public class DirectoryChooserPanel extends JPanel {
 
     private JButton directoryChooserBtn;
-    //    private JButton fileChooserBtn;
+    private JButton startOrganisingBtn;
     private JLabel directoryPathLabel;
     private JFileChooser directoryChooser;
     private JTextField directoryPathTextField;
 
     private File currentDirectory;
+
+    private CurrentStatusListener currentStatusListener;
 
     {
         init();
@@ -37,6 +39,7 @@ public class DirectoryChooserPanel extends JPanel {
         add(directoryPathLabel);
         add(directoryPathTextField);
         add(directoryChooserBtn);
+        add(startOrganisingBtn);
 
     }
 
@@ -47,6 +50,7 @@ public class DirectoryChooserPanel extends JPanel {
 
         //  Instantiating the Components of the Directory Organiser.
         directoryChooserBtn = new JButton();
+        startOrganisingBtn = new JButton("START!");
         directoryPathLabel = new JLabel("Directory Path:");
         directoryPathTextField = new JTextField(40);
 
@@ -83,7 +87,7 @@ public class DirectoryChooserPanel extends JPanel {
     private void setupFont() {
 
         //  Instantiating the font component.
-        Font font = new Font("Verdana", Font.BOLD, 24);
+        Font font = new Font("Verdana", Font.BOLD, 22);
 
         //  Apply font to directoryPathLabel & directoryPathTextField.
         directoryPathLabel.setFont(font);
@@ -107,6 +111,16 @@ public class DirectoryChooserPanel extends JPanel {
         //  Handle the Actions to be performed when directoryChooserBtn is clicked.
         directoryChooserBtn.addActionListener(this::directoryChooserBtnActionPerformed);
 
+        startOrganisingBtn.addActionListener(this::startOrganisingBtnActionPerformed);
+
+    }
+
+    private void startOrganisingBtnActionPerformed(ActionEvent event) {
+
+        if (currentStatusListener != null) {
+            currentStatusListener.emitCurrentStatus(true);
+        }
+
     }
 
     private void directoryChooserBtnActionPerformed(ActionEvent event) {
@@ -114,8 +128,8 @@ public class DirectoryChooserPanel extends JPanel {
         //  Setup directoryChooser.
         setupDirectoryChooser();
 
-        //  Open Dialog Box for Directory Selection.
-        int selectedValue = directoryChooser.showOpenDialog(getParent());
+        //  Show Dialog Box for Directory Selection.
+        int selectedValue = directoryChooser.showDialog(getParent(), DirectoryFilter.approveBtnText);
 
         //  Ensure the selected file is a Directory & Update the currentDirectory attribute.
         validateChosenDirectory(selectedValue);
@@ -175,6 +189,10 @@ public class DirectoryChooserPanel extends JPanel {
 
     void setCurrentDirectory(File currentDirectory) {
         this.currentDirectory = currentDirectory;
+    }
+
+    public void setCurrentStatusListener(CurrentStatusListener currentStatusListener) {
+        this.currentStatusListener = currentStatusListener;
     }
 }
 

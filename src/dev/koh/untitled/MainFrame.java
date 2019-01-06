@@ -66,7 +66,15 @@ public class MainFrame extends JFrame {
 
     private void initializeListeners() {
 
+        //  Switch Card to the directoryOrganiser when the startPanel btn is clicked.
         startPanel.setStartPanelListener(this::launchOrganiser);
+
+        //  Update the currentStatus of the directoryOrganiser when the
+        //  directoryChooserPanel is ready with the current Directory.
+        directoryChooserPanel.setCurrentStatusListener((boolean b) -> {
+            directoryOrganiser.setCurrentStatus(b);
+            directoryOrganiser.beginMajorPanel();
+        });
 
     }
 

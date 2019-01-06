@@ -22,13 +22,12 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 6th January 2K19, 09:46 PM..!!
+ *  Last Modified: 6th January 2K19, 11:18 PM..!!
  *
  *  Latest Update:
- *  7th Commit:
- *      1. Setup directoryChooser & updated directoryPathTextField successfully.
- *      2. DirectoryFilter class added.
- *
+ *  Commit 8th:
+ *      1. Start Button added with currentStatus emitted to the DirectoryOrganiser
+ *         via CurrentStatusListener Functional Interface.
  *  Change Log:
  *  Init Commit:
  *      1. Controller with the Blank MainFrame Added.
@@ -52,6 +51,10 @@ public class App {
  *  Commit 6th:
  *      1. Classes Added: Utils, FileExtensionUtility, Extension (Enum).
  *      2. Btn Action Performed Modified to handle the file Extension.
+ *
+ *  7th Commit:
+ *      1. Setup directoryChooser & updated directoryPathTextField successfully.
+ *      2. DirectoryFilter class added.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^
