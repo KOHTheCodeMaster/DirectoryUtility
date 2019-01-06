@@ -22,12 +22,12 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 1st January 2K19, 05:56 PM..!!
+ *  Last Modified: 6th January 2K19, 09:46 PM..!!
  *
  *  Latest Update:
- *  Commit 6th:
- *      1. Classes Added: Utils, FileExtensionUtility, Extension (Enum).
- *      2. Btn Action Performed Modified to handle the file Extension.
+ *  7th Commit:
+ *      1. Setup directoryChooser & updated directoryPathTextField successfully.
+ *      2. DirectoryFilter class added.
  *
  *  Change Log:
  *  Init Commit:
@@ -48,6 +48,10 @@ public class App {
  *
  *  Commit 5th:
  *      1. Encapsulated the DirectoryOrganiser & DirectoryChooserPanel Classes.
+ *
+ *  Commit 6th:
+ *      1. Classes Added: Utils, FileExtensionUtility, Extension (Enum).
+ *      2. Btn Action Performed Modified to handle the file Extension.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^

@@ -10,13 +10,13 @@ import java.io.File;
 
 public class DirectoryChooserPanel extends JPanel {
 
-    private JButton btn1;
-    private JButton fileChooserBtn;
-    private JLabel testLbl1;
-    private JFileChooser fileChooser;
-    private JTextField textField;
+    private JButton directoryChooserBtn;
+    //    private JButton fileChooserBtn;
+    private JLabel directoryPathLabel;
+    private JFileChooser directoryChooser;
+    private JTextField directoryPathTextField;
 
-    private Font font;
+    private File currentDirectory;
 
     {
         init();
@@ -34,9 +34,9 @@ public class DirectoryChooserPanel extends JPanel {
 
         setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        add(testLbl1);
-        add(textField);
-        add(btn1);
+        add(directoryPathLabel);
+        add(directoryPathTextField);
+        add(directoryChooserBtn);
 
     }
 
@@ -46,27 +46,26 @@ public class DirectoryChooserPanel extends JPanel {
         setupPanelSize();
 
         //  Instantiating the Components of the Directory Organiser.
-        btn1 = new JButton();
-        testLbl1 = new JLabel("Directory Path:");
-        textField = new JTextField(40);
+        directoryChooserBtn = new JButton();
+        directoryPathLabel = new JLabel("Directory Path:");
+        directoryPathTextField = new JTextField(40);
 
-        //  Setup fileChooser.
-        setupFileChooser();
+        directoryChooser = new JFileChooser();
 
-        //  Initialize & Set the font for the components including testLbl1 & textField.
+        //  Initialize & Set the font for the components including directoryPathLabel & directoryPathTextField.
         setupFont();
 
-        //  Set Image Icon to Btn1.
+        //  Set Image Icon to directoryChooserBtn.
         setupImageIcon();
 
     }
 
-    private void setupFileChooser() {
+    private void setupDirectoryChooser() {
+        //  Instantiate the directoryChooser such that it displays only Directories.
+        directoryChooser.setFileFilter(new DirectoryFilter());
 
-        //  Instantiate the fileChooser.
-        fileChooser = new JFileChooser();
-
-
+        //  Allow directoryChooser to select only Directory.
+        directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
     }
 
     private void setupPanelSize() {
@@ -84,46 +83,68 @@ public class DirectoryChooserPanel extends JPanel {
     private void setupFont() {
 
         //  Instantiating the font component.
-        font = new Font("Verdana", Font.PLAIN, 24);
+        Font font = new Font("Verdana", Font.BOLD, 24);
 
-        //  Apply font to testLbl1 & textField.
-        testLbl1.setFont(font);
-        textField.setFont(font);
+        //  Apply font to directoryPathLabel & directoryPathTextField.
+        directoryPathLabel.setFont(font);
+        directoryPathTextField.setFont(font);
 
     }
 
-    //  Set the Image Icon for the btn1.
+    //  Set the Image Icon for the directoryChooserBtn.
     private void setupImageIcon() {
 
         ImageIcon imageIcon = new ImageIcon("res/Icons/directory_icon2.png");
         Image img = imageIcon.getImage();
         Image newImage = img.getScaledInstance(imageIcon.getIconWidth(), imageIcon.getIconHeight(), Image.SCALE_SMOOTH);
 
-        btn1.setIcon(new ImageIcon(newImage));
+        directoryChooserBtn.setIcon(new ImageIcon(newImage));
 
     }
 
     private void initializeEventListeners() {
 
-        //  Handle the Actions to be performed when btn1 is clicked.
-        btn1.addActionListener(this::btn1ActionPerformed);
+        //  Handle the Actions to be performed when directoryChooserBtn is clicked.
+        directoryChooserBtn.addActionListener(this::directoryChooserBtnActionPerformed);
 
     }
 
-    private void btn1ActionPerformed(ActionEvent event) {
+    private void directoryChooserBtnActionPerformed(ActionEvent event) {
 
-//        System.out.println("test msg.");
-        File file = new File("res/Icons/directory_icon2.png");
-        System.out.println("Video Extension: " + Utils.getExtension(file));
+        //  Setup directoryChooser.
+        setupDirectoryChooser();
 
-        if (Utils.isVideoFile(new File("a.mkv")))
-            System.out.println("Video File.");
+        //  Open Dialog Box for Directory Selection.
+        int selectedValue = directoryChooser.showOpenDialog(getParent());
+
+        //  Ensure the selected file is a Directory & Update the currentDirectory attribute.
+        validateChosenDirectory(selectedValue);
+
+        //  Update the Directory Path Text Field.
+        directoryPathTextField.setText(this.getCurrentDirectory().getAbsolutePath());
 
     }
 
+    private void validateChosenDirectory(int selectedValue) {
+
+        //  Temporary variable for the selected directory.
+        File selectedDirectory = null;
+
+        //  Get the Selected Directory from the directoryChooser.
+        if (selectedValue == JFileChooser.APPROVE_OPTION)
+            selectedDirectory = directoryChooser.getSelectedFile();
+
+        //  Ensure that the selectedDirectory is not null.
+        assert selectedDirectory != null;
+
+        //  Update the currentDirectory attribute of the DirectoryChooserPanel to the selectedDirectory.
+        if (selectedDirectory.isDirectory())
+            this.setCurrentDirectory(selectedDirectory);
+
+    }
 
     /*
-    //  2 Methods used to adjust the image icon to the size of the JButton btn1.
+    //  2 Methods used to adjust the image icon to the size of the JButton directoryChooserBtn.
     void updateIcon2() {
         //  Image Centered in the Btn.
         ImageIcon icon = new ImageIcon("res/Icons/directory_icon2.png");
@@ -132,7 +153,7 @@ public class DirectoryChooserPanel extends JPanel {
         Graphics g = bi.createGraphics();
         g.drawImage(img, 0, 0, null);
         icon = new ImageIcon(bi);
-        btn1.setIcon(icon);
+        directoryChooserBtn.setIcon(icon);
     }
 
     void updateIcon1() {
@@ -141,12 +162,43 @@ public class DirectoryChooserPanel extends JPanel {
         Image img = icon.getImage();
         Image newimg = img.getScaledInstance(90, 30, java.awt.Image.SCALE_SMOOTH);
         icon = new ImageIcon(newimg);
-        btn1.setIcon(icon);
+        directoryChooserBtn.setIcon(icon);
     }
     */
+
+    //      ||  Getters & Setters  ||
+
+
+    File getCurrentDirectory() {
+        return currentDirectory;
+    }
+
+    void setCurrentDirectory(File currentDirectory) {
+        this.currentDirectory = currentDirectory;
+    }
 }
 
-class videoFileFilter extends FileFilter {
+class DirectoryFilter extends FileFilter {
+
+    static final String approveBtnText;
+
+    static {
+        approveBtnText = "Select Directory";
+    }
+
+    @Override
+    public boolean accept(File f) {
+        //  Allow only the Directories to be shown in the FileChooser.
+        return f.isDirectory();
+    }
+
+    @Override
+    public String getDescription() {
+        return "Only Directory";
+    }
+}
+
+class VideoFileFilter extends FileFilter {
 
     @Override
     public boolean accept(File f) {
@@ -154,8 +206,6 @@ class videoFileFilter extends FileFilter {
         //  Allow the Directories to be shown in the FileChooser.
         if (f.isDirectory())
             return true;
-
-//        Extension extension = Utils.getExtension(f);
 
         return (Utils.isVideoFile(f));
     }

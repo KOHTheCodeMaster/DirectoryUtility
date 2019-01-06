@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class StartPanel extends JPanel {
+class StartPanel extends JPanel {
 
     private StartPanelListener startPanelListener;
 
@@ -98,11 +98,6 @@ public class StartPanel extends JPanel {
 
     }
 
-    private void fireStartOrganiser() {
-        if (startPanelListener != null)
-            startPanelListener.launchApp();
-    }
-
     void setStartPanelListener(StartPanelListener startPanelListener) {
         this.startPanelListener = startPanelListener;
     }
@@ -110,5 +105,10 @@ public class StartPanel extends JPanel {
     //  Action Performed by btn1.
     private void actionPerformed(ActionEvent event) {
         fireStartOrganiser();
+    }
+
+    private void fireStartOrganiser() {
+        if (startPanelListener != null)
+            startPanelListener.launchApp();
     }
 }

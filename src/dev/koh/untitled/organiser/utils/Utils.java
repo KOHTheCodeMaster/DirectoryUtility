@@ -18,12 +18,8 @@ public class Utils {
 
         FileExtensionUtility fileExtensionUtility = new FileExtensionUtility(file);
 
-        if (fileExtensionUtility.getVideoExtensions().contains(fileExtensionUtility.getExtension())) {
-//            System.out.println("!: " + fileExtensionUtility.getExtension() + "\n.: " + Extension.MKV);
-            return true;
-        }
+        return fileExtensionUtility.getVideoExtensions().contains(fileExtensionUtility.getExtension());
 
-        return false;
     }
 }
 
@@ -32,9 +28,9 @@ class FileExtensionUtility {
     private Extension extension;
     private String fileName;
 
-    private List<Extension> videoExtensions;
+    private static List<Extension> videoExtensions;
 
-    {
+    static {
         init();
     }
 
@@ -43,7 +39,7 @@ class FileExtensionUtility {
         this.extension = obtainExtension();
     }
 
-    private void init() {
+    private static void init() {
         videoExtensions = new ArrayList<>();
 
         videoExtensions.add(Extension.MP4);
