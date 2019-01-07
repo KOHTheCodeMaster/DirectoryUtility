@@ -30,6 +30,9 @@ public class DirectoryChooserPanel extends JPanel {
         //  Setup Flow Layout.
         setupLayoutManager();
 
+        //  Setup the Etched Border (Margin).
+        setBorder(BorderFactory.createEtchedBorder());
+
     }
 
     private void setupLayoutManager() {
