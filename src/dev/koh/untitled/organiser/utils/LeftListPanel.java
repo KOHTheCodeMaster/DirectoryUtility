@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 class LeftListPanel extends JPanel {
 
@@ -29,7 +30,7 @@ class LeftListPanel extends JPanel {
         testLabel = new JLabel();
 
         //  Set the Minimum Size.
-        Dimension minimum = new Dimension(200, 100);
+        Dimension minimum = new Dimension(640, 100);
         setMinimumSize(minimum);
 
     }
@@ -48,7 +49,13 @@ class LeftListPanel extends JPanel {
     }
 
     void showFiles(File currentDirectory) {
-        testLabel.setText(currentDirectory.getName());
+        try {
+            //  Using canonical Path i.e. removing '.', '..' & Symbolic Links with their
+            //  Absolute Path.
+            testLabel.setText(currentDirectory.getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

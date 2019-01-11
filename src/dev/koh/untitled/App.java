@@ -22,16 +22,13 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 11th January 2K19, 05:44 PM..!!
+ *  Last Modified: 11th January 2K19, 09:10 PM..!!
  *
  *  Latest Update:
- *  Commit 10th:
- *      1. LeftListPanel String attribute replaced with JLabel.
- *      2. Displaying currentDirectory in LeftListPanel.
- *      3. Return type for validateChosenDirectory method of DirectoryChooserPanel
- *         updated to boolean & fixed the Bug of Exception when no directory is selected.
- *      4. CurrentStatusListener refactored to CurrentDirectoryListener & changed its parameter
- *         from boolean to currentDirectory selected by DirectoryChooserPanel.
+ *  Commit 11th:
+ *      1. Updated directoryPathTextField such that if any invalid directory is provided explicitly
+ *         then it'll simply set the currentDirectory to null & no processing will start.
+ *      2. Updated the Minimum Width of the LeftListPanel to 640.
  *
  *  Change Log:
  *  Init Commit:
@@ -67,6 +64,14 @@ public class App {
  *
  *  Commit 9th:
  *      1. JSplitPane added to the DirectoryOrganiser.
+ *
+ *  Commit 10th:
+ *      1. LeftListPanel String attribute replaced with JLabel.
+ *      2. Displaying currentDirectory in LeftListPanel.
+ *      3. Return type for validateChosenDirectory method of DirectoryChooserPanel
+ *         updated to boolean & fixed the Bug of Exception when no directory is selected.
+ *      4. CurrentStatusListener refactored to CurrentDirectoryListener & changed its parameter
+ *         from boolean to currentDirectory selected by DirectoryChooserPanel.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^

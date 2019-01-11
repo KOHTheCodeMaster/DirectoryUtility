@@ -73,6 +73,9 @@ public class DirectoryChooserPanel extends JPanel {
 
         //  Allow directoryChooser to select only Directory.
         directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        //  Remove ALL Files Filter from the directoryChooser & allow only Directories to be displayed for selection.
+        directoryChooser.setAcceptAllFileFilterUsed(false);
     }
 
     private void setupPanelSize() {
@@ -126,6 +129,23 @@ public class DirectoryChooserPanel extends JPanel {
         //  Pass the currentDirectory as a Parameter so that it could be used by directoryOrganiser
         //  instance which is present in MainFrame class.
         if (currentDirectoryListener != null) {
+
+            //  validate the directoryPath.
+            File temp = new File(directoryPathTextField.getText());
+
+            //  Set temp to null If the directoryPathTextField is invalid Directory.
+            temp = temp.isDirectory() ? temp : null;
+
+            //  Set the currentDirectory for directoryChooserPanel.
+            this.setCurrentDirectory(temp);
+
+            /*
+                For communicating with the directoryOrganiser which is in the MainFrame,
+                Using currentDirectoryListener, passing the currentDirectory as an argument to
+                its method emitCurrentDirectory which is defined in the MainFrame class.
+                This acts like a pipeline medium between DirectoryChooserPanel & DirectoryOrganiser for
+                communications concerned with currentDirectory.
+             */
             if (this.getCurrentDirectory() != null)
                 currentDirectoryListener.emitCurrentDirectory(this.getCurrentDirectory());
         }
@@ -145,6 +165,12 @@ public class DirectoryChooserPanel extends JPanel {
         if (validateChosenDirectory(selectedValue))
             directoryPathTextField.setText(this.getCurrentDirectory().getAbsolutePath());
 
+        //  The following else will never execute because No File could ever be selected except a directory
+        //  due to the AcceptAllFilter is disabled & manually invalid Directory Path will lead to assiging
+        //  currentDirectory to null.
+//        else
+//            System.out.println("Invalid Directory Selected.");
+
     }
 
     private boolean validateChosenDirectory(int selectedValue) {
@@ -163,9 +189,11 @@ public class DirectoryChooserPanel extends JPanel {
 //        assert selectedDirectory != null;
 
         //  Update the currentDirectory attribute of the DirectoryChooserPanel to the selectedDirectory.
-        if (selectedDirectory.isDirectory())
+        if (selectedDirectory.isDirectory()) {
             this.setCurrentDirectory(selectedDirectory);
-        return true;
+            return true;
+        }
+        return false;
     }
 
     /*
@@ -194,11 +222,11 @@ public class DirectoryChooserPanel extends JPanel {
     //      ||  Getters & Setters  ||
 
 
-    File getCurrentDirectory() {
+    private File getCurrentDirectory() {
         return currentDirectory;
     }
 
-    void setCurrentDirectory(File currentDirectory) {
+    private void setCurrentDirectory(File currentDirectory) {
         this.currentDirectory = currentDirectory;
     }
 
