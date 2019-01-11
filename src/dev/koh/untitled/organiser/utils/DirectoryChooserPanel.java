@@ -18,7 +18,7 @@ public class DirectoryChooserPanel extends JPanel {
 
     private File currentDirectory;
 
-    private CurrentStatusListener currentStatusListener;
+    private CurrentDirectoryListener currentDirectoryListener;
 
     {
         init();
@@ -114,14 +114,20 @@ public class DirectoryChooserPanel extends JPanel {
         //  Handle the Actions to be performed when directoryChooserBtn is clicked.
         directoryChooserBtn.addActionListener(this::directoryChooserBtnActionPerformed);
 
+        //  Handle the Actions to be performed when Start Btn. is clicked.
         startOrganisingBtn.addActionListener(this::startOrganisingBtnActionPerformed);
 
     }
 
     private void startOrganisingBtnActionPerformed(ActionEvent event) {
 
-        if (currentStatusListener != null) {
-            currentStatusListener.emitCurrentStatus(true);
+        //  When currentDirectoryListener of directoryChooserPanel is not null i.e.
+        //  it has been set by the MainFrame class along with its method definition.
+        //  Pass the currentDirectory as a Parameter so that it could be used by directoryOrganiser
+        //  instance which is present in MainFrame class.
+        if (currentDirectoryListener != null) {
+            if (this.getCurrentDirectory() != null)
+                currentDirectoryListener.emitCurrentDirectory(this.getCurrentDirectory());
         }
 
     }
@@ -135,29 +141,31 @@ public class DirectoryChooserPanel extends JPanel {
         int selectedValue = directoryChooser.showDialog(getParent(), DirectoryFilter.approveBtnText);
 
         //  Ensure the selected file is a Directory & Update the currentDirectory attribute.
-        validateChosenDirectory(selectedValue);
-
-        //  Update the Directory Path Text Field.
-        directoryPathTextField.setText(this.getCurrentDirectory().getAbsolutePath());
+        //  And Update the Directory Path Text Field.
+        if (validateChosenDirectory(selectedValue))
+            directoryPathTextField.setText(this.getCurrentDirectory().getAbsolutePath());
 
     }
 
-    private void validateChosenDirectory(int selectedValue) {
+    private boolean validateChosenDirectory(int selectedValue) {
 
         //  Temporary variable for the selected directory.
         File selectedDirectory = null;
 
+        //  Return false if user doesn't selects any directory.
+        if (selectedValue != JFileChooser.APPROVE_OPTION)
+            return false;
+
         //  Get the Selected Directory from the directoryChooser.
-        if (selectedValue == JFileChooser.APPROVE_OPTION)
-            selectedDirectory = directoryChooser.getSelectedFile();
+        selectedDirectory = directoryChooser.getSelectedFile();
 
         //  Ensure that the selectedDirectory is not null.
-        assert selectedDirectory != null;
+//        assert selectedDirectory != null;
 
         //  Update the currentDirectory attribute of the DirectoryChooserPanel to the selectedDirectory.
         if (selectedDirectory.isDirectory())
             this.setCurrentDirectory(selectedDirectory);
-
+        return true;
     }
 
     /*
@@ -194,8 +202,8 @@ public class DirectoryChooserPanel extends JPanel {
         this.currentDirectory = currentDirectory;
     }
 
-    public void setCurrentStatusListener(CurrentStatusListener currentStatusListener) {
-        this.currentStatusListener = currentStatusListener;
+    public void setCurrentDirectoryListener(CurrentDirectoryListener currentDirectoryListener) {
+        this.currentDirectoryListener = currentDirectoryListener;
     }
 }
 

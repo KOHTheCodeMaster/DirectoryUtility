@@ -3,10 +3,11 @@ package dev.koh.untitled.organiser.utils;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.File;
 
 class LeftListPanel extends JPanel {
 
-    private String testLabel;
+    private JLabel testLabel;
 
     {
         init();
@@ -24,6 +25,9 @@ class LeftListPanel extends JPanel {
 
     private void init() {
 
+        //  Instantiate the testLabel.
+        testLabel = new JLabel();
+
         //  Set the Minimum Size.
         Dimension minimum = new Dimension(200, 100);
         setMinimumSize(minimum);
@@ -39,6 +43,12 @@ class LeftListPanel extends JPanel {
     }
 
     private void setupLayout() {
-        setLayout(new GridBagLayout());
+        setLayout(new FlowLayout(FlowLayout.LEADING));
+        add(testLabel);
+    }
+
+    void showFiles(File currentDirectory) {
+        testLabel.setText(currentDirectory.getName());
+
     }
 }

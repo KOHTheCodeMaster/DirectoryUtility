@@ -5,6 +5,7 @@ import dev.koh.untitled.organiser.utils.DirectoryOrganiser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class MainFrame extends JFrame {
 
@@ -46,11 +47,6 @@ public class MainFrame extends JFrame {
 
         initializeListeners();
 
-//        cardLayout = new CardLayout();
-//        setLayout(cardLayout);
-//        add(startPanel, "startPanel");
-//        add(textPanel, "textPanel");
-
     }
 
     private void setupDirectoryOrganiser() {
@@ -71,9 +67,13 @@ public class MainFrame extends JFrame {
 
         //  Update the currentStatus of the directoryOrganiser when the
         //  directoryChooserPanel is ready with the current Directory.
-        directoryChooserPanel.setCurrentStatusListener((boolean b) -> {
-            directoryOrganiser.setCurrentStatus(b);
-            directoryOrganiser.beginMajorPanel();
+        directoryChooserPanel.setCurrentDirectoryListener((File currentDirectory) -> {
+
+            //  Update the currentStatus of directoryOrganiser.
+            directoryOrganiser.setCurrentStatus(true);
+
+            //  Update the currentDirectory of directoryOrganiser & Fire Start the major panels.
+            directoryOrganiser.fireStartMajorPanels(currentDirectory);
         });
 
     }

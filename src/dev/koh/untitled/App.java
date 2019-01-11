@@ -22,11 +22,16 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 7th January 2K19, 09:37 PM..!!
+ *  Last Modified: 11th January 2K19, 05:44 PM..!!
  *
  *  Latest Update:
- *  Commit 9th:
- *      1. JSplitPane added to the DirectoryOrganiser.
+ *  Commit 10th:
+ *      1. LeftListPanel String attribute replaced with JLabel.
+ *      2. Displaying currentDirectory in LeftListPanel.
+ *      3. Return type for validateChosenDirectory method of DirectoryChooserPanel
+ *         updated to boolean & fixed the Bug of Exception when no directory is selected.
+ *      4. CurrentStatusListener refactored to CurrentDirectoryListener & changed its parameter
+ *         from boolean to currentDirectory selected by DirectoryChooserPanel.
  *
  *  Change Log:
  *  Init Commit:
@@ -52,13 +57,16 @@ public class App {
  *      1. Classes Added: Utils, FileExtensionUtility, Extension (Enum).
  *      2. Btn Action Performed Modified to handle the file Extension.
  *
- *  7th Commit:
+ *  Commit 7th:
  *      1. Setup directoryChooser & updated directoryPathTextField successfully.
  *      2. DirectoryFilter class added.
  *
  *  Commit 8th:
  *      1. Start Button added with currentStatus emitted to the DirectoryOrganiser
- *         via CurrentStatusListener Functional Interface.
+ *         via CurrentDirectoryListener Functional Interface.
+ *
+ *  Commit 9th:
+ *      1. JSplitPane added to the DirectoryOrganiser.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^
