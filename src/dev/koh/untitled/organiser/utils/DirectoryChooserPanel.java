@@ -178,6 +178,12 @@ public class DirectoryChooserPanel extends JPanel {
         //  Temporary variable for the selected directory.
         File selectedDirectory = null;
 
+        //  Return false if user clicks on CANCEL button.
+        if (selectedValue == JFileChooser.CANCEL_OPTION) {
+            System.out.println("Directory Selection Cancelled.");
+            return false;
+        }
+
         //  Return false if user doesn't selects any directory.
         if (selectedValue != JFileChooser.APPROVE_OPTION)
             return false;
