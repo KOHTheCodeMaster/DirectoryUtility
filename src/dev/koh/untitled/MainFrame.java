@@ -69,6 +69,12 @@ public class MainFrame extends JFrame {
         //  directoryChooserPanel is ready with the current Directory.
         directoryChooserPanel.setCurrentDirectoryListener((File currentDirectory) -> {
 
+            //  If the Start button has already been clicked once, print "Already Running." msg. on Console.
+            if (directoryOrganiser.isCurrentStatus()) {
+                System.out.println("Already Running.");
+                return;
+            }
+
             //  Update the currentStatus of directoryOrganiser.
             directoryOrganiser.setCurrentStatus(true);
 

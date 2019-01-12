@@ -22,14 +22,12 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 11th January 2K19, 10:29 PM..!!
+ *  Last Modified: 12th January 2K19, 06:03 PM..!!
  *
  *  Latest Update:
- *  Commit 12th:
- *      1. DirectoryChooserPanel: Cancel Button -> directory selection is cancelled msg. is displayed on Console.
- *      2. FileListElement Class added with fileName, checkBox, serialNumberTextField components.
- *      3. ActionListener Added on checkBox & incrementing the serialNumber count value by 1 for each click
- *         & decrementing on each un-checking the checkBox.
+ *  Commit 13th:
+ *      1. If the Start button has already been clicked once, print "Already Running." msg. on Console.
+ *      2. FileList Components added & displayed in LeftListPanel when Start button is clicked.
  *
  *  Change Log:
  *  Init Commit:
@@ -78,6 +76,12 @@ public class App {
  *      1. Updated directoryPathTextField such that if any invalid directory is provided explicitly
  *         then it'll simply set the currentDirectory to null & no processing will start.
  *      2. Updated the Minimum Width of the LeftListPanel to 640.
+ *
+ *  Commit 12th:
+ *      1. DirectoryChooserPanel: Cancel Button -> directory selection is cancelled msg. is displayed on Console.
+ *      2. FileListElement Class added with fileName, checkBox, serialNumberTextField components.
+ *      3. ActionListener Added on checkBox & incrementing the serialNumber count value by 1 for each click
+ *         & decrementing on each un-checking the checkBox.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^

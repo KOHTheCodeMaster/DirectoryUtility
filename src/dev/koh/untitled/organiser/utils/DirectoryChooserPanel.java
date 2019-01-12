@@ -260,21 +260,3 @@ class DirectoryFilter extends FileFilter {
         return "Only Directory";
     }
 }
-
-class VideoFileFilter extends FileFilter {
-
-    @Override
-    public boolean accept(File f) {
-
-        //  Allow the Directories to be shown in the FileChooser.
-        if (f.isDirectory())
-            return true;
-
-        return (Utils.isVideoFile(f));
-    }
-
-    @Override
-    public String getDescription() {
-        return "Video Files";
-    }
-}

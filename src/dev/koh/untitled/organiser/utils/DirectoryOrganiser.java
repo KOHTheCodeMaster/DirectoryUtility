@@ -56,6 +56,9 @@ public class DirectoryOrganiser extends JPanel {
         //  Set the currentDirectory selected by directoryChooserPanel for DirectoryOrganiser.
         setCurrentDirectory(currentDirectory);
 
+        //  Instantiate filesList list.
+        leftPanel.initializeList();
+
         //  Update the content of the Left & Right Panels.
         leftPanel.showFiles(currentDirectory);
     }

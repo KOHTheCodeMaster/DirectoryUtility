@@ -10,7 +10,7 @@ import java.util.List;
 
 class LeftListPanel extends JPanel {
 
-    private List<FileListElement> filesList;
+    private List<FileListElement> filesList = null;
 
     {
         init();
@@ -28,23 +28,30 @@ class LeftListPanel extends JPanel {
 
     private void init() {
 
-        //  Instantiate filesList list.
-        initializeList();
-
         //  Set the Minimum Size.
         Dimension minimum = new Dimension(640, 100);
         setMinimumSize(minimum);
 
     }
 
-    private void initializeList() {
-        filesList = new LinkedList<>();
+    void initializeList() {
+        this.filesList = new LinkedList<>();
 
         filesList.add(new FileListElement("a1"));
         filesList.add(new FileListElement("a3"));
         filesList.add(new FileListElement("a5"));
         filesList.add(new FileListElement("a2"));
         filesList.add(new FileListElement("a4"));
+    }
+
+    private void addFileList() {
+        //  Add The fileList to the LeftListPanel.
+        for (FileListElement obj : this.filesList)
+            add(obj);
+
+        //  Applying validate method to ensure the components are added & displayed instantly.
+        //  Otherwise, components are displayed when splitPane's divider is moved explicitly.
+        this.validate();
     }
 
     private void setupBorder() {
@@ -57,11 +64,10 @@ class LeftListPanel extends JPanel {
 
     private void setupLayout() {
         setLayout(new FlowLayout(FlowLayout.LEADING));
-        for (FileListElement obj : filesList)
-            add(obj);
     }
 
     void showFiles(File currentDirectory) {
+        addFileList();
         /*
         try {
             //  Using canonical Path i.e. removing '.', '..' & Symbolic Links with their
