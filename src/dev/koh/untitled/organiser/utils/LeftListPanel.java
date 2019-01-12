@@ -10,7 +10,7 @@ import java.util.List;
 
 class LeftListPanel extends JPanel {
 
-    private List<FileListElement> filesList = null;
+    static List<FileListElement> filesList = null;
 
     {
         init();
@@ -78,6 +78,10 @@ class LeftListPanel extends JPanel {
         }
          */
     }
+
+    public static List<FileListElement> getFilesList() {
+        return filesList;
+    }
 }
 
 class FileListElement extends JPanel {
@@ -110,29 +114,64 @@ class FileListElement extends JPanel {
         if (checkBox.isSelected()) {
             System.out.println(fileName.getText());
 
-            this.getSerialNumberTextField().setText(FileListElement.serialNumber++ + "");
+            //  Set the serialNumber as the actionCommand for the checkBox.
+            this.checkBox.setActionCommand(String.valueOf(FileListElement.serialNumber));
 
+            //  Update the serialNumberTextField with the serialNumber.
+            this.getSerialNumberTextField().setText(String.valueOf(FileListElement.serialNumber));
+
+            //  Increment the serialNumber by 1.
+            FileListElement.serialNumber++;
         }
 
         if (!checkBox.isSelected()) {
-            System.out.println("...");
+            //  Update the serialNumberTextField with the empty string.
             this.getSerialNumberTextField().setText("");
+
+            String currentCheckBoxActionCommand = checkBox.getActionCommand();
+
+            //  Decrement the serialNumber by 1.
             FileListElement.serialNumber--;
 
+            System.out.println("Before");
+            displayList();
+
             //  Fix the serial numbers of the List.
-//            fixList();
+            fixList(currentCheckBoxActionCommand);
+
+            System.out.println("After");
+            displayList();
 
         }
 
     }
 
-    private void fixList() {
+    //  Display filesList.
+    private void displayList() {
+        for (FileListElement obj : LeftListPanel.filesList) {
+            if (!obj.getCheckBox().getActionCommand().equals("null")) {
+                System.out.println(obj);
+            }
+        }
+    }
 
+    //  Remove that Element whose checkBox has been de-selected.
+    private void fixList(String currentCB) {
+        for (int i = 0; i < LeftListPanel.filesList.size(); i++) {
+
+            FileListElement temp = LeftListPanel.filesList.get(i);
+
+            if (temp.checkBox.getActionCommand().equals(currentCB)) {
+                LeftListPanel.filesList.remove(temp);
+                temp.getCheckBox().setActionCommand(null);
+            }
+        }
     }
 
     private void init() {
         //  Instantiate the other Components.
         checkBox = new JCheckBox();
+        checkBox.setActionCommand("null");
         serialNumberTextField = new JTextField(4);
     }
 
@@ -168,4 +207,10 @@ class FileListElement extends JPanel {
         this.serialNumberTextField = serialNumberTextField;
     }
 
+    @Override
+    public String toString() {
+        return "fileName=" + fileName.getText() +
+                ", serialNumberTextField=" + serialNumberTextField.getText() +
+                ", checkBox: " + checkBox.getActionCommand();
+    }
 }

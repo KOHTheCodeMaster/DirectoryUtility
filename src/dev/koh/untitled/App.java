@@ -22,12 +22,12 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 12th January 2K19, 06:03 PM..!!
+ *  Last Modified: 12th January 2K19, 08:59 PM..!!
  *
  *  Latest Update:
- *  Commit 13th:
- *      1. If the Start button has already been clicked once, print "Already Running." msg. on Console.
- *      2. FileList Components added & displayed in LeftListPanel when Start button is clicked.
+ *  Commit 14th:
+ *      1. FilesList checkBox ActionListener updated such that it removes the Element when the
+ *         checkBox is de-selected.
  *
  *  Change Log:
  *  Init Commit:
@@ -82,6 +82,10 @@ public class App {
  *      2. FileListElement Class added with fileName, checkBox, serialNumberTextField components.
  *      3. ActionListener Added on checkBox & incrementing the serialNumber count value by 1 for each click
  *         & decrementing on each un-checking the checkBox.
+ *
+ *  Commit 13th:
+ *      1. If the Start button has already been clicked once, print "Already Running." msg. on Console.
+ *      2. FileList Components added & displayed in LeftListPanel when Start button is clicked.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^
