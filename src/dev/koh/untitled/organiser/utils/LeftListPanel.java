@@ -32,22 +32,17 @@ class LeftListPanel extends JPanel {
         Dimension minimum = new Dimension(640, 100);
         setMinimumSize(minimum);
 
+        filesList = new LinkedList<>();
     }
 
-    void initializeList() {
-        this.filesList = new LinkedList<>();
-
-        filesList.add(new FileListElement("a1"));
-        filesList.add(new FileListElement("a3"));
-        filesList.add(new FileListElement("a5"));
-        filesList.add(new FileListElement("a2"));
-        filesList.add(new FileListElement("a4"));
-    }
-
+    //  Add the list of file extracted from the currentDirectory to the LeftListPanel.
     private void addFileList() {
         //  Add The fileList to the LeftListPanel.
-        for (FileListElement obj : this.filesList)
-            add(obj);
+        add(new FileListElement("a1"));
+        add(new FileListElement("a2"));
+        add(new FileListElement("a3"));
+        add(new FileListElement("a4"));
+        add(new FileListElement("a5"));
 
         //  Applying validate method to ensure the components are added & displayed instantly.
         //  Otherwise, components are displayed when splitPane's divider is moved explicitly.
@@ -105,30 +100,51 @@ class FileListElement extends JPanel {
 
     }
 
+    //  Instantiate the Components.
+    private void init() {
+        checkBox = new JCheckBox();
+        checkBox.setActionCommand("null");
+        serialNumberTextField = new JTextField(4);
+    }
+
     private void initializeListeners() {
         checkBox.addActionListener(this::checkBoxActionPerformed);
     }
 
     private void checkBoxActionPerformed(ActionEvent event) {
 
+        //  When the checkBox is Selected.
         if (checkBox.isSelected()) {
-            System.out.println(fileName.getText());
-
             //  Set the serialNumber as the actionCommand for the checkBox.
             this.checkBox.setActionCommand(String.valueOf(FileListElement.serialNumber));
 
             //  Update the serialNumberTextField with the serialNumber.
             this.getSerialNumberTextField().setText(String.valueOf(FileListElement.serialNumber));
 
+            //  this here refers to the current object of FileListItem whose checkBox is selected.
+            LeftListPanel.filesList.add(this);
+
             //  Increment the serialNumber by 1.
             FileListElement.serialNumber++;
         }
 
+        //  When the checkBox is De-Selected.
         if (!checkBox.isSelected()) {
             //  Update the serialNumberTextField with the empty string.
             this.getSerialNumberTextField().setText("");
 
+            //  Extract the actionCommand from the checkBox & store it in currentCheckBoxActionCommand.
             String currentCheckBoxActionCommand = checkBox.getActionCommand();
+
+            //  Parse the actionCommand from the checkBox into integer.
+            //  tempSerialNumber will be set to -1 if the actionCommand of the checkBox which is
+            //  currently deselected is not a valid Integer.
+            int tempSerialNumber = currentCheckBoxActionCommand.equals("null") ? -1 :
+                    Integer.parseInt(currentCheckBoxActionCommand);
+
+            //  Unknown Case [Just in case purpose].
+            if (tempSerialNumber == -1)
+                System.out.println("Invalid Serial Number Encountered!");
 
             //  Decrement the serialNumber by 1.
             FileListElement.serialNumber--;
@@ -137,7 +153,7 @@ class FileListElement extends JPanel {
             displayList();
 
             //  Fix the serial numbers of the List.
-            fixList(currentCheckBoxActionCommand);
+            fixList(currentCheckBoxActionCommand, tempSerialNumber);
 
             System.out.println("After");
             displayList();
@@ -151,29 +167,76 @@ class FileListElement extends JPanel {
         for (FileListElement obj : LeftListPanel.filesList) {
             if (!obj.getCheckBox().getActionCommand().equals("null")) {
                 System.out.println(obj);
-            }
+            } else
+                System.out.println("# : " + obj);
         }
     }
 
     //  Remove that Element whose checkBox has been de-selected.
-    private void fixList(String currentCB) {
+    private void fixList(String currentCheckBoxActionCommand, int tempSerialNumber) {
+
+        boolean nodeDeleted = false;
+
+        /*
+            currentCheckBoxActionCommand => actionCommand of that checkBox which is currently deselected.
+            tempSerialNumber => integer value of the actionCommand of the node which needs to be deleted.
+            Iterate through the filesList & remove the node whose checkBox's actionCommand
+            is equal to the currentCheckBoxActionCommand.
+            After removing the particular node, set the flag nodeDeleted to be true
+            so that the Nodes ahead of the deleted node will be modified such that their serialNumber will be
+            decremented by 1.
+         */
+
         for (int i = 0; i < LeftListPanel.filesList.size(); i++) {
 
+            //  Temporarily store the individual nodes of the filesList for each iteration in temp.
             FileListElement temp = LeftListPanel.filesList.get(i);
 
-            if (temp.checkBox.getActionCommand().equals(currentCB)) {
+            //  If the checkBox has null value in its actionCommand that means it has not been selected yet,
+            //  so return the control from the Loop.
+            if (temp.getCheckBox().getActionCommand().equals("null")) {
+                System.out.println("i: " + i);
+                return;
+            }
+
+            /*
+                If the Node is removed successfully & the value of tempSerialNumber ain't -1 then,
+                Update the actionCommand & serialNumber in text field for all those Nodes whose actionCommand
+                value is greater than the deleted Node.
+             */
+            if (nodeDeleted && tempSerialNumber != -1) {
+
+                temp.getCheckBox().setActionCommand(tempSerialNumber + "");
+                temp.getSerialNumberTextField().setText(tempSerialNumber + "");
+
+                //  Increment the tempSerialNumber by 1.
+                tempSerialNumber++;
+
+//                System.out.println("! : " + temp.getCheckBox().getActionCommand());
+
+                //  Continue the loop for the next Node to fix its actionCommand & serialNumber in text field.
+                continue;
+            }
+
+            if (temp.checkBox.getActionCommand().equals(currentCheckBoxActionCommand)) {
+
+                //  Remove the particular node.
                 LeftListPanel.filesList.remove(temp);
-                temp.getCheckBox().setActionCommand(null);
+
+                /*
+                    After removing the Node, each successive node is automatically shifted 1 position to
+                    the left, so explicitly decrementing the value of i by 1 to  reach the next node which
+                    takes place of the deleted node as i will be incremented again in next iteration.
+                 */
+                i--;
+
+                //  Set the Flag to true after removing the node.
+                nodeDeleted = true;
+
             }
         }
     }
 
-    private void init() {
-        //  Instantiate the other Components.
-        checkBox = new JCheckBox();
-        checkBox.setActionCommand("null");
-        serialNumberTextField = new JTextField(4);
-    }
 
     private void setupLayout() {
 

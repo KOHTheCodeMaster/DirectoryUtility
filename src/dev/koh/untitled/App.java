@@ -22,12 +22,12 @@ public class App {
 
 /*
  *  Date Created: 30th December 2K18, 08:49 PM..!!
- *  Last Modified: 12th January 2K19, 08:59 PM..!!
+ *  Last Modified: 13th January 2K19, 06:26 PM..!!
  *
  *  Latest Update:
- *  Commit 14th:
- *      1. FilesList checkBox ActionListener updated such that it removes the Element when the
- *         checkBox is de-selected.
+ *  Commit 15th:
+ *      1. LinkedList of the FileListItem optimized.
+ *      2. initializeList method removed from the leftListPanel.
  *
  *  Change Log:
  *  Init Commit:
@@ -86,6 +86,10 @@ public class App {
  *  Commit 13th:
  *      1. If the Start button has already been clicked once, print "Already Running." msg. on Console.
  *      2. FileList Components added & displayed in LeftListPanel when Start button is clicked.
+ *
+ *  Commit 14th:
+ *      1. FilesList checkBox ActionListener updated such that it removes the Element when the
+ *         checkBox is de-selected.
  *
  *  Code Developed By,
  *  ~K.O.H..!! ^__^
